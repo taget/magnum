@@ -251,6 +251,12 @@ parameters:
     description: version of kubernetes used for kubernetes cluster
     default: v1.2.0
 
+  insecure_registry:
+    type: string
+    default: ""
+    description: insecure registry url
+
+
 resources:
 
   ######################################################################
@@ -432,6 +438,7 @@ resources:
           trustee_password: {get_param: trustee_password}
           trust_id: {get_param: trust_id}
           auth_url: {get_param: auth_url}
+          insecure_registry: {get_param: insecure_registry}
 
   ######################################################################
   #
@@ -489,6 +496,7 @@ resources:
           trustee_domain_id: {get_param: trustee_domain_id}
           trust_id: {get_param: trust_id}
           auth_url: {get_param: auth_url}
+          insecure_registry: {get_param: insecure_registry}
 
 outputs:
 

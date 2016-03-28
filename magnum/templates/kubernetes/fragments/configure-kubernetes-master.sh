@@ -42,9 +42,15 @@ sed -i '
   /^KUBE_CONTROLLER_MANAGER_ARGS=/ s/KUBE_CONTROLLER_MANAGER_ARGS.*/#Uncomment the following line to enable Kubernetes Load Balancer feature \n#KUBE_CONTROLLER_MANAGER_ARGS="--cloud_config=\/etc\/sysconfig\/kube_openstack_config --cloud_provider=openstack"/
 ' /etc/kubernetes/controller-manager
 
-KUBE_CONFIG="--register-node=false --config=/etc/kubernetes/manifests"
+KUBELET_ARGS="--register-node=false --config=/etc/kubernetes/manifests"
+
+if [ -n "${INSECURE_REGISTRY}" ]; then
+    KUBELET_ARGS="${KUBELET_ARGS} --pod-infra-container-image=${INSECURE_REGISTRY}/google_containers/pause\:0.8.0"
+    echo "INSECURE_REGISTRY='--insecure-registry ${INSECURE_REGISTRY}'" >> /etc/sysconfig/docker
+fi
+
 sed -i '
   /^KUBELET_ADDRESS=/ s/=.*/="--address=0.0.0.0"/
   /^KUBELET_HOSTNAME=/ s/=.*/=""/
-  /^KUBELET_ARGS=/ s|=.*|='"$KUBE_CONFIG"'|
+  /^KUBELET_ARGS=/ s|=.*|='"$KUBELET_ARGS"'|
 ' /etc/kubernetes/kubelet

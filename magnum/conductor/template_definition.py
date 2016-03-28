@@ -459,6 +459,8 @@ class K8sTemplateDefinition(BaseTemplateDefinition):
                            required=True)
         self.add_parameter('registry_enabled',
                            baymodel_attr='registry_enabled')
+        self.add_parameter('insecure_registry',
+                           baymodel_attr='insecure_registry')
 
         self.add_output('api_address',
                         bay_attr='api_address',
