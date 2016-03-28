@@ -85,6 +85,7 @@ Developer Info
    dev/functional-test.rst
    dev/reno.rst
    magnum-proxy.rst
+   magnum-use-private-registry.rst
    contributing
    heat-templates
    objects
