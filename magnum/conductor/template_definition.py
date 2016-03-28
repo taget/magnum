@@ -580,6 +580,9 @@ class AtomicSwarmTemplateDefinition(BaseTemplateDefinition):
         self.add_parameter('tls_disabled',
                            baymodel_attr='tls_disabled',
                            required=True)
+        self.add_parameter('insecure_registry',
+                           baymodel_attr='insecure_registry')
+
         self.add_output('api_address',
                         bay_attr='api_address',
                         mapping_type=SwarmApiAddressOutputMapping)

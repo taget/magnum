@@ -4,6 +4,10 @@
 
 mkdir -p /etc/systemd/system/docker.service.d
 
+if [ -n "${INSECURE_REGISTRY}" ]; then
+    echo "INSECURE_REGISTRY='--insecure-registry ${INSECURE_REGISTRY}'" >> /etc/sysconfig/docker
+fi
+
 cat > /etc/systemd/system/docker.service << END_SERVICE_TOP
 [Unit]
 Description=Docker Application Container Engine

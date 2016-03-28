@@ -1,5 +1,14 @@
 #!/bin/sh
 
+. /etc/sysconfig/heat-params
+
+
+SWARM_IMAGE=swarm
+
+if [ -n "${INSECURE_REGISTRY}" ]; then
+    SWARM_IMAGE="${INSECURE_REGISTRY}"/"${SWARM_IMAGE}"
+fi
+
 cat > /etc/systemd/system/swarm-manager.service << END_SERVICE_TOP
 [Unit]
 Description=Swarm Manager
@@ -11,14 +20,14 @@ OnFailure=swarm-manager-failure.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill swarm-manager
 ExecStartPre=-/usr/bin/docker rm swarm-manager
-ExecStartPre=-/usr/bin/docker pull swarm:$SWARM_VERSION
+ExecStartPre=-/usr/bin/docker pull $SWARM_IMAGE:$SWARM_VERSION
 ExecStart=/usr/bin/docker run --name swarm-manager \\
                               -v /etc/docker:/etc/docker \\
                               -p 2376:2375 \\
                               -e http_proxy=$HTTP_PROXY \\
                               -e https_proxy=$HTTPS_PROXY \\
                               -e no_proxy=$NO_PROXY \\
-                              swarm:$SWARM_VERSION \\
+                              $SWARM_IMAGE:$SWARM_VERSION \\
                               manage -H tcp://0.0.0.0:2375 \\
                               --replication \\
                               --advertise $NODE_IP:2376 \\

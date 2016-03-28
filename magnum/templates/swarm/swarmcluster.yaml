@@ -172,6 +172,11 @@ parameters:
     type: string
     description: url for keystone
 
+  insecure_registry:
+    type: string
+    default: ""
+    description: insecure registry url
+
 resources:
 
   ######################################################################
@@ -323,6 +328,7 @@ resources:
           trustee_password: {get_param: trustee_password}
           trust_id: {get_param: trust_id}
           auth_url: {get_param: auth_url}
+          insecure_registry: {get_param: insecure_registry}
 
   swarm_nodes:
     type: "OS::Heat::ResourceGroup"
@@ -358,6 +364,7 @@ resources:
           trustee_password: {get_param: trustee_password}
           trust_id: {get_param: trust_id}
           auth_url: {get_param: auth_url}
+          insecure_registry: {get_param: insecure_registry}
 
 outputs:
 

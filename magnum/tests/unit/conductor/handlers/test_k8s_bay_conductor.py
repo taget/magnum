@@ -215,7 +215,8 @@ class TestBayConductorWithK8s(base.TestCase):
             'trustee_user_id': '7b489f04-b458-4541-8179-6a48a553e656',
             'trustee_username': 'fake_trustee',
             'username': 'fake_user',
-            'volume_driver': 'volume_driver'
+            'volume_driver': 'volume_driver',
+            'insecure_registry': '10.0.0.1:5000',
         }
 
         self.assertEqual(expected, definition)

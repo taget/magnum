@@ -111,6 +111,10 @@ parameters:
     type: string
     description: url for keystone
 
+  insecure_registry:
+    type: string
+    description: insecure registry url
+
 resources:
 
   node_cloud_init_wait_handle:
@@ -168,6 +172,7 @@ resources:
             "$TRUSTEE_PASSWORD": {get_param: trustee_password}
             "$TRUST_ID": {get_param: trust_id}
             "$AUTH_URL": {get_param: auth_url}
+            "$INSECURE_REGISTRY": {get_param: insecure_registry}
 
   remove_docker_key:
     type: "OS::Heat::SoftwareConfig"

@@ -44,7 +44,8 @@ class TestBayConductorWithSwarm(base.TestCase):
             'network_driver': 'network_driver',
             'labels': {'flannel_network_cidr': '10.101.0.0/16',
                        'flannel_network_subnetlen': '26',
-                       'flannel_backend': 'vxlan'}
+                       'flannel_backend': 'vxlan'},
+            'insecure_registry': '10.0.0.1:5000',
         }
         self.bay_dict = {
             'id': 1,
@@ -111,7 +112,8 @@ class TestBayConductorWithSwarm(base.TestCase):
             'trustee_password': 'fake_trustee_password',
             'trustee_user_id': '7b489f04-b458-4541-8179-6a48a553e656',
             'trust_id': 'bd11efc5-d4e2-4dac-bbce-25e348ddf7de',
-            'auth_url': 'http://192.168.10.10:5000/v3'
+            'auth_url': 'http://192.168.10.10:5000/v3',
+            'insecure_registry': '10.0.0.1:5000',
         }
         self.assertEqual(expected, definition)
 
@@ -153,7 +155,8 @@ class TestBayConductorWithSwarm(base.TestCase):
             'trustee_password': 'fake_trustee_password',
             'trustee_user_id': '7b489f04-b458-4541-8179-6a48a553e656',
             'trust_id': 'bd11efc5-d4e2-4dac-bbce-25e348ddf7de',
-            'auth_url': 'http://192.168.10.10:5000/v3'
+            'auth_url': 'http://192.168.10.10:5000/v3',
+            'insecure_registry': '10.0.0.1:5000',
         }
         self.assertEqual(expected, definition)
 

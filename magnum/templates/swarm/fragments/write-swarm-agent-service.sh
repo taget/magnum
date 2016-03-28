@@ -6,6 +6,12 @@ myip="$SWARM_NODE_IP"
 
 CONF_FILE=/etc/systemd/system/swarm-agent.service
 
+SWARM_IMAGE=swarm
+
+if [ -n "${INSECURE_REGISTRY}" ]; then
+    SWARM_IMAGE="${INSECURE_REGISTRY}"/"${SWARM_IMAGE}"
+fi
+
 cat > $CONF_FILE << EOF
 [Unit]
 Description=Swarm Agent
@@ -17,12 +23,12 @@ OnFailure=swarm-agent-failure.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill swarm-agent
 ExecStartPre=-/usr/bin/docker rm swarm-agent
-ExecStartPre=-/usr/bin/docker pull swarm:$SWARM_VERSION
+ExecStartPre=-/usr/bin/docker pull $SWARM_IMAGE:$SWARM_VERSION
 ExecStart=/usr/bin/docker run -e http_proxy=$HTTP_PROXY \\
                               -e https_proxy=$HTTPS_PROXY \\
                               -e no_proxy=$NO_PROXY \\
                               --name swarm-agent \\
-                              swarm:$SWARM_VERSION \\
+                              $SWARM_IMAGE:$SWARM_VERSION \\
                               join \\
                               --addr $myip:2375 \\
                               etcd://$ETCD_SERVER_IP:2379/v2/keys/swarm/

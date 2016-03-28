@@ -134,6 +134,10 @@ parameters:
     type: string
     description: url for keystone
 
+  insecure_registry:
+    type: string
+    description: insecure registry url
+
 resources:
 
   cloud_init_wait_handle:
@@ -195,6 +199,7 @@ resources:
             "$TRUSTEE_PASSWORD": {get_param: trustee_password}
             "$TRUST_ID": {get_param: trust_id}
             "$AUTH_URL": {get_param: auth_url}
+            "$INSECURE_REGISTRY": {get_param: insecure_registry}
 
   write_network_config:
     type: "OS::Heat::SoftwareConfig"
@@ -413,4 +418,3 @@ outputs:
     value: {get_attr: [swarm_master_floating, floating_ip_address]}
     description: >
       This is the "public" ip addresses of Swarm master.
-
